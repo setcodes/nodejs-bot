@@ -10,12 +10,16 @@
 ```
 npm i
 ```
-### Step 2. Run app
+### Step 2. Prisma generate
+```
+npx prisma generate
+```
+### Step 3. Run app
 
 ```
 npm run start
 ```
-### Step 3. Fill fake data
+### Step 4 (optional). Fill fake data
 ```
 npm run seed
 ```
