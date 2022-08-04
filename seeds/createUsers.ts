@@ -1,5 +1,5 @@
 import {PrismaClient} from '@prisma/client';
-import {printSuccess} from './log.service.js';
+import {printSuccess} from '../src/services/log.service.js';
 
 const prisma = new PrismaClient();
 
@@ -9,14 +9,14 @@ const user = {
     last_name: 'Botov',
 }
 
-const seed = async() => {
+const createUser = async() => {
     try {
         await prisma.$connect();
-        const createUser =  await prisma.user.create({data: user});
+        await prisma.user.create({data: user});
         await prisma.$disconnect();
         printSuccess('Seed completed');
     } catch (e:unknown) {
         throw new Error('Seed failed');
     }
 }
-seed();
+createUser();

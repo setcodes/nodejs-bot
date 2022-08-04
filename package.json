@@ -6,7 +6,7 @@
   "scripts": {
     "tsc": "tsc src/index.ts",
     "start": "tsc && node dist/index.js",
-    "seed": "tsc && node dist/services/seed.service.js"
+    "seed": "tsc && node dist/seeds/createUsers.js"
   },
   "type": "module",
   "author": "Egor Maximov",
