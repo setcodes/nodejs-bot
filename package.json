@@ -2,11 +2,12 @@
   "name": "nodejs-bot",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
-    "tsc": "tsc src/index.ts",
-    "start": "tsc && node dist/index.js",
-    "seed": "tsc && node dist/seeds/createUsers.js"
+    "build": "tsc",
+    "start": "node build/index.js",
+    "dev": "tsc && node build/index.js",
+    "seed": "tsc && node build/seeds/createUsers.js"
   },
   "type": "module",
   "author": "Egor Maximov",
