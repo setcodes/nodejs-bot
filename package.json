@@ -8,7 +8,7 @@
         "build": "tsc src/main.ts",
         "start": "tsc && node build/src/main.js",
         "dev": "nodemon",
-        "seed": "tsc && node dist/seeds/createUsers.js"
+        "seed": "tsc && node build/prisma/seeds/generate.js"
     },
     "author": "Egor Maximov",
     "license": "ISC",
