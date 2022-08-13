@@ -8,15 +8,15 @@ import { TYPES } from './types';
 
 @injectable()
 export class Bot {
-    constructor(
-        @inject(TYPES.LoggerService) private loggerService: LoggerService,
-        @inject(TYPES.ConfigService) private configService: ConfigService,
-        @inject(TYPES.PrismaService) private prismaService: PrismaService,
-        @inject(TYPES.BotService) private botService: BotService
-    ) {}
+	constructor(
+		@inject(TYPES.LoggerService) private loggerService: LoggerService,
+		@inject(TYPES.ConfigService) private configService: ConfigService,
+		@inject(TYPES.PrismaService) private prismaService: PrismaService,
+		@inject(TYPES.BotService) private botService: BotService,
+	) {}
 
-    public async init() {
-        await this.prismaService.connect();
-        this.botService.run();
-    }
+	public async init(): Promise<void> {
+		await this.prismaService.connect();
+		this.botService.run();
+	}
 }

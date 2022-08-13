@@ -7,15 +7,13 @@ import { TYPES } from '../types';
 
 @injectable()
 export class ConfigService {
-    constructor(
-        @inject(TYPES.LoggerService) private loggerService: LoggerService
-    ) {}
-    get(key: string): string {
-        const dotenvParse = config().parsed;
-        if (!dotenvParse) {
-            throw new Error(ERROR_CONFIG_LOAD);
-        }
-        this.loggerService.log(SUCCESS_CONFIG_LOAD);
-        return dotenvParse[key];
-    }
+	constructor(@inject(TYPES.LoggerService) private loggerService: LoggerService) {}
+	get(key: string): string {
+		const dotenvParse = config().parsed;
+		if (!dotenvParse) {
+			throw new Error(ERROR_CONFIG_LOAD);
+		}
+		this.loggerService.log(SUCCESS_CONFIG_LOAD);
+		return dotenvParse[key];
+	}
 }

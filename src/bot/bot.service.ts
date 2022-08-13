@@ -11,53 +11,47 @@ import { TYPES } from '../types';
 
 @injectable()
 export class BotService {
-    bot: Telegraf<IContext>;
-    token: string;
-    stage: Scenes.Stage<IContext>;
+	bot: Telegraf<IContext>;
+	token: string;
+	stage: Scenes.Stage<IContext>;
 
-    constructor(
-        @inject(TYPES.LoggerService) private loggerService: LoggerService,
-        @inject(TYPES.ConfigService) private configService: ConfigService
-    ) {
-        this.token = configService.get('TG_TOKEN');
-        this.bot = new Telegraf<IContext>(this.token);
-        this.stage = new Scenes.Stage<IContext>([eduScene]);
-    }
+	constructor(
+		@inject(TYPES.LoggerService) private loggerService: LoggerService,
+		@inject(TYPES.ConfigService) private configService: ConfigService,
+	) {
+		this.token = configService.get('TG_TOKEN');
+		this.bot = new Telegraf<IContext>(this.token);
+		this.stage = new Scenes.Stage<IContext>([eduScene]);
+	}
 
-    run() {
-        if (!this.token) {
-            this.loggerService.error(ERROR_TG_TOKEN);
-            throw new Error(ERROR_TG_TOKEN);
-        }
+	run(): void {
+		if (!this.token) {
+			this.loggerService.error(ERROR_TG_TOKEN);
+			throw new Error(ERROR_TG_TOKEN);
+		}
 
-        this.bot.use(
-            new LocalSession({ database: 'session.json' }).middleware()
-        );
-        this.bot.use(this.stage.middleware());
-        this.bot.command('start', async (ctx: IContext) => {
-            return await ctx.reply(
-                'Выберите интересующий раздел',
-                Markup.keyboard([
-                    ['Обучение'],
-                    ['Семинары и совещания'],
-                    ['Справка'],
-                ])
-                    .oneTime()
-                    .resize()
-            );
-        });
-        this.bot.hears('Обучение', (ctx: IContext) => {
-            ctx.scene.enter('eduScene');
-        });
+		this.bot.use(new LocalSession({ database: 'session.json' }).middleware());
+		this.bot.use(this.stage.middleware());
+		this.bot.command('start', async (ctx: IContext) => {
+			return await ctx.reply(
+				'Выберите интересующий раздел',
+				Markup.keyboard([['Обучение'], ['Семинары и совещания'], ['Справка']])
+					.oneTime()
+					.resize(),
+			);
+		});
+		this.bot.hears('Обучение', (ctx: IContext) => {
+			ctx.scene.enter('eduScene');
+		});
 
-        this.bot.on('text', (ctx: IContext) => {
-            ctx.reply('Используйте команду /start чтобы начать работу с ботом');
-        });
+		this.bot.on('text', (ctx: IContext) => {
+			ctx.reply('Используйте команду /start чтобы начать работу с ботом');
+		});
 
-        this.loggerService.log(SUCCESS_BOT_IS_RUNNING);
-        this.bot.launch();
-    }
-    stop() {
-        this.bot.stop;
-    }
+		this.loggerService.log(SUCCESS_BOT_IS_RUNNING);
+		this.bot.launch();
+	}
+	stop(): void {
+		this.bot.stop;
+	}
 }
