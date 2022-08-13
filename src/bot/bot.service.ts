@@ -5,15 +5,20 @@ import { ERROR_TG_TOKEN, SUCCESS_BOT_IS_RUNNING } from './constants';
 import { IContext } from './interfaces';
 import LocalSession from 'telegraf-session-local';
 import { eduScene } from './scenes/edu.scene';
+import 'reflect-metadata';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../types';
 
-export class BotServices {
-    logger: LoggerService;
+@injectable()
+export class BotService {
     bot: Telegraf<IContext>;
     token: string;
     stage: Scenes.Stage<IContext>;
 
-    constructor(loggerService: LoggerService, configService: ConfigService) {
-        this.logger = loggerService;
+    constructor(
+        @inject(TYPES.LoggerService) private loggerService: LoggerService,
+        @inject(TYPES.ConfigService) private configService: ConfigService
+    ) {
         this.token = configService.get('TG_TOKEN');
         this.bot = new Telegraf<IContext>(this.token);
         this.stage = new Scenes.Stage<IContext>([eduScene]);
@@ -21,7 +26,7 @@ export class BotServices {
 
     run() {
         if (!this.token) {
-            this.logger.error(ERROR_TG_TOKEN);
+            this.loggerService.error(ERROR_TG_TOKEN);
             throw new Error(ERROR_TG_TOKEN);
         }
 
@@ -49,7 +54,7 @@ export class BotServices {
             ctx.reply('Используйте команду /start чтобы начать работу с ботом');
         });
 
-        this.logger.log(SUCCESS_BOT_IS_RUNNING);
+        this.loggerService.log(SUCCESS_BOT_IS_RUNNING);
         this.bot.launch();
     }
     stop() {

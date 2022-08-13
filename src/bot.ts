@@ -1,27 +1,22 @@
-import { BotServices } from './bot/bot.service';
+import { inject, injectable } from 'inversify';
+import { BotService } from './bot/bot.service';
 import { ConfigService } from './config/config.service';
 import { PrismaService } from './db/prisma.service';
 import { LoggerService } from './logger/logger.service';
+import 'reflect-metadata';
+import { TYPES } from './types';
 
+@injectable()
 export class Bot {
-    logger: LoggerService;
-    config: ConfigService;
-    bot: BotServices;
-    prisma: PrismaService;
-
     constructor(
-        loggerService: LoggerService,
-        configService: ConfigService,
-        prismaService: PrismaService
-    ) {
-        this.logger = loggerService;
-        this.config = configService;
-        this.bot = new BotServices(loggerService, configService);
-        this.prisma = prismaService;
-    }
+        @inject(TYPES.LoggerService) private loggerService: LoggerService,
+        @inject(TYPES.ConfigService) private configService: ConfigService,
+        @inject(TYPES.PrismaService) private prismaService: PrismaService,
+        @inject(TYPES.BotService) private botService: BotService
+    ) {}
 
-    async init() {
-        await this.prisma.connect();
-        this.bot.run();
+    public async init() {
+        await this.prismaService.connect();
+        this.botService.run();
     }
 }

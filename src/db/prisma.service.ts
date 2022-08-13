@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { inject, injectable } from 'inversify';
 import { LoggerService } from '../logger/logger.service';
 import {
     SUCCESS_DB_CONNECTION,
@@ -6,23 +7,26 @@ import {
     CLOSE_DB_CONNECTION,
 } from './constants';
 import { IPrismaService } from './prisma.service.interface';
+import 'reflect-metadata';
+import { TYPES } from '../types';
 
+@injectable()
 export class PrismaService implements IPrismaService {
     client: PrismaClient;
-    logger: LoggerService;
 
-    constructor(loggerService: LoggerService) {
+    constructor(
+        @inject(TYPES.LoggerService) private loggerService: LoggerService
+    ) {
         this.client = new PrismaClient();
-        this.logger = loggerService;
     }
 
     public async connect(): Promise<void> {
         try {
             await this.client.$connect();
-            this.logger.log(SUCCESS_DB_CONNECTION);
+            this.loggerService.log(SUCCESS_DB_CONNECTION);
         } catch (e) {
             if (e instanceof Error) {
-                this.logger.error(ERROR_DB_CONNECTION);
+                this.loggerService.error(ERROR_DB_CONNECTION);
                 this.disconnect();
                 throw new Error(e.message);
             }
@@ -32,7 +36,7 @@ export class PrismaService implements IPrismaService {
     public async disconnect(): Promise<void> {
         try {
             await this.client.$disconnect();
-            this.logger.warn(CLOSE_DB_CONNECTION);
+            this.loggerService.warn(CLOSE_DB_CONNECTION);
         } catch (e) {
             if (e instanceof Error) {
                 throw new Error(e.message);
