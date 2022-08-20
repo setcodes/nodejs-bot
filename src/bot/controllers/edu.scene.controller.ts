@@ -11,12 +11,12 @@ export class EduSceneController extends BaseSceneController {
 
 	constructor(
 		scene: Scenes.BaseScene<IContext>,
-		userService: IUserService,
 		loggerService: ILoggerService,
+		userService: IUserService,
 	) {
 		super(scene);
-		this.userService = userService;
 		this.loggerService = loggerService;
+		this.userService = userService;
 
 		//binding
 		this.bindEvent([
