@@ -7,3 +7,10 @@ export interface IContext extends Context {
 	session: ISession;
 	scene: Scenes.SceneContextScene<IContext, ISessionScene>;
 }
+//TODO: add types command, text
+export interface ISceneAction {
+	method: 'command' | 'enter' | 'hears';
+	command?: any;
+	text?: any;
+	func: (ctx: IContext) => void;
+}

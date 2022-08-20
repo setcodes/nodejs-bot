@@ -3,6 +3,7 @@ import { Users } from './users';
 
 const userData = {
 	username: 'client',
+	is_bot: false,
 	first_name: 'abaim',
 	last_name: 'abanat',
 };
