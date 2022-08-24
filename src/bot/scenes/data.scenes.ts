@@ -1,5 +1,5 @@
 import { StartSceneController } from '../controllers/start.scene.controller';
-import { EduSceneController } from '../controllers/edu.scene.controller';
+import { EducationSceneController } from '../controllers/education.scene.controller';
 
 export const dataScenes = {
 	startScene: {
@@ -8,8 +8,8 @@ export const dataScenes = {
 		services: ['loggerService', 'userService'],
 	},
 	eduScene: {
-		sceneName: 'eduScene',
-		controller: EduSceneController,
+		sceneName: 'educationScene',
+		controller: EducationSceneController,
 		services: ['loggerService', 'userService'],
 	},
 };

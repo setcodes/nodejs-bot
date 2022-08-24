@@ -5,7 +5,7 @@ import { IUserService } from '../../user/interfaces';
 import { IContext } from '../interfaces';
 import { BaseSceneController } from './base.scene.controller';
 
-export class EduSceneController extends BaseSceneController {
+export class EducationSceneController extends BaseSceneController {
 	private loggerService: ILoggerService;
 	private userService: IUserService;
 
@@ -21,7 +21,7 @@ export class EduSceneController extends BaseSceneController {
 		//binding
 		this.bindEvent([
 			{ method: 'hears', text: 'Назад', func: this.backScene },
-			{ method: 'hears', text: 'Программы', func: this.getProgramm },
+			{ method: 'hears', text: 'Программы', func: this.sendReplyProgramms },
 		]);
 
 		//calls baseScene method
@@ -32,7 +32,7 @@ export class EduSceneController extends BaseSceneController {
 				.resize(),
 		);
 	}
-	async getProgramm(ctx: IContext): Promise<void> {
+	async sendReplyProgramms(ctx: IContext): Promise<void> {
 		const userId = ctx.from?.id;
 		if (!userId) {
 			this.loggerService.error(ERROR_USER_ID);

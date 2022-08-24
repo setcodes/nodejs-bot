@@ -24,7 +24,7 @@ export class StartSceneController extends BaseSceneController {
 	}
 
 	async goToEduScene(ctx: IContext): Promise<void> {
-		this.loggerService.warn('eduScene');
-		this.swithScene(ctx, 'eduScene');
+		this.loggerService.warn('educationScene');
+		this.swithScene(ctx, 'educationScene');
 	}
 }
