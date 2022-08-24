@@ -7,7 +7,7 @@ export const dataScenes = {
 		controller: StartSceneController,
 		services: ['loggerService', 'userService'],
 	},
-	eduScene: {
+	educationScene: {
 		sceneName: 'educationScene',
 		controller: EducationSceneController,
 		services: ['loggerService', 'userService'],
