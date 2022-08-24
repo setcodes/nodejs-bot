@@ -80,6 +80,7 @@ build
 
 # IDE / Editor
 .idea
+.vscode
 
 # Service worker
 sw.*
