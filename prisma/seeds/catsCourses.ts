@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client';
 import { LoggerService } from '../../src/logger/logger.service';
 import { ERROR_SEED, SUCCES_SEED } from './constants';
-import { IUser } from './interfaces/user.interface';
+import { ICatsCourses } from './interfaces/cats.courses.interface';
 
-export class Users {
+export class CatsCourses {
 	loger: LoggerService;
 	prisma: PrismaClient;
 
@@ -12,10 +12,10 @@ export class Users {
 		this.prisma = new PrismaClient();
 	}
 
-	async createUser(user: IUser): Promise<void> {
+	async createCategoryCourse(categories: ICatsCourses[]): Promise<void> {
 		try {
 			await this.prisma.$connect();
-			await this.prisma.user.create({ data: user });
+			await this.prisma.categoriesCoursesModel.createMany({ data: categories });
 			await this.prisma.$disconnect();
 			this.loger.log(SUCCES_SEED);
 		} catch (e: unknown) {

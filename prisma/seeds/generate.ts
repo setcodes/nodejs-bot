@@ -1,17 +1,17 @@
 import { LoggerService } from '../../src/logger/logger.service';
-import { Users } from './users';
+import { CatsCourses } from './catsCourses';
 
-const userData = {
-	username: 'client',
-	is_bot: false,
-	first_name: 'abaim',
-	last_name: 'abanat',
-};
+const categories = [
+	{ name: 'метрология и стандартизация' },
+	{ name: 'газификация' },
+	{ name: 'производственная безопастность' },
+	{ name: 'программное обеспечение' },
+];
 
 const generate = async (): Promise<void> => {
 	const logger = new LoggerService();
-	const user = new Users(logger);
+	const catsCourses = new CatsCourses(logger);
 
-	await user.createUser(userData);
+	await catsCourses.createCategoryCourse(categories);
 };
 generate();

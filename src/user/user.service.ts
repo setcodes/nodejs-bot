@@ -35,6 +35,6 @@ export class UserService implements IUserService {
 		if (!id) {
 			return null;
 		}
-		return await this.userRepository.findById(id);
+		return this.userRepository.findById(id);
 	}
 }

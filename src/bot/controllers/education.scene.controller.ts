@@ -21,13 +21,17 @@ export class EducationSceneController extends BaseSceneController {
 		//binding
 		this.bindEvent([
 			{ method: 'hears', text: 'Назад', func: this.backScene },
-			{ method: 'hears', text: 'Программы', func: this.sendReplyProgramms },
+			{ method: 'hears', text: 'Образовательные программы', func: this.sendReplyProgramms },
 		]);
 
 		//calls baseScene method
 		this.enter(
 			'Выберите интересующий раздел',
-			Markup.keyboard([['Программы'], ['Запись на обучение'], ['Справка', 'Назад']])
+			Markup.keyboard([
+				['Образовательные программы'],
+				['Записаться на обучение'],
+				['Справка по обучению', 'Назад'],
+			])
 				.oneTime()
 				.resize(),
 		);
